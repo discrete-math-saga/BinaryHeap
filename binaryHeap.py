@@ -1,17 +1,19 @@
+from typing import Any
+
 class BinaryHeap:
     """
     Binary Heap
     """
     def __init__(self):
         """
-        コンストラクタ
+        Constructor
         """
-        self._members = [None]
+        self._members = [None]#Zeroth position
         self._n = 0
     
-    def __str__(self):
+    def __str__(self) -> str:
         """
-        文字列化
+        Converting this object into a string
         """
         text = ""
         for i in range(1, self._n + 1):
@@ -19,39 +21,39 @@ class BinaryHeap:
             text += f'{i}:{a}\n'
         return text
 
-    def add(self, o):
+    def add(self, o:Any) -> None:
         """
-        要素の追加
+        Add an element to this binary heap
 
         Parameters
         ---
-        o 追加する要素
+        o: an element to be added
         """
         self._members.append(o)
         self._n += 1
         self._shiftUp(self._n)
         
-    def _shiftUp(self, k:int):
+    def _shiftUp(self, k:int) -> None:
         """
-        指定した位置の要素をシフトアップ
+        Shift up the element specified by the position
 
         Parameters
         ---
-        k 要素の位置
+        k: the position of the element to be shifted up
         """
-        kk = int(k/2)
+        kk = k // 2
         if (k > 1) and self._isLess(k, kk):
             self._swap(k, kk)
             k = kk
             self._shiftUp(k)
         
-    def poll(self):
+    def poll(self) -> Any:
         """
-        最小要素を取り出す。取り出した要素は削除される
+        Extract the minimum element. The extracted element will be removed from this binary heap.
 
         Returns
         ---
-        取り出した最小要素
+        The minimum element of this binary heap
 
         """
         t = self._members[1]
@@ -64,13 +66,13 @@ class BinaryHeap:
         self._shiftDown(1)
         return t
     
-    def _shiftDown(self, k:int):
+    def _shiftDown(self, k:int) -> None:
         """
-        指定した位置の要素をシフトダウン
+        Shift down the element specified by the position
 
         Parameters
         ---
-        k 要素の位置
+        k: the position of the element to be shifted down
         """
         if 2*k <= self._n:
             j = 2 * k
@@ -81,24 +83,23 @@ class BinaryHeap:
             self._swap(k, j)
             self._shiftDown(j)
     
-    def reduceValue(self, o):
+    def reduceValue(self, o:Any) -> None:
         """
-        値が減少した要素を指定する
+        Specify the element whose value is decreased, and is shifted up
 
         Parameters
         ---
-        o 指定する要素
+        o: the element to be specified
         """
         k = self._members.index(o)
         self._shiftUp(k)
         
-    def raiseValue(self, o):
+    def raiseValue(self, o:Any) -> None:
         """
-        値が増加した要素を指定する
-
+        Specify the element whose value is increased, and is shifted down
         Parameters
         ---
-        o 指定する要素
+        o: the element to be specified
         """
         k = self._members.index(o)
         self._shiftDown(k)
@@ -106,32 +107,26 @@ class BinaryHeap:
 
     def size(self) ->int:
         """
-        要素数を返す
+        Return the number of elements included in this binary heap
 
-        Returns
-        ---
-        要素数
         """
         return self._n
 
-    def get(self, k:int):
+    def get(self, k:int) -> Any:
         """
-        指定された位置の要素を返す
+        Return the element at the specified position
 
-        Parameters
-        ---
-        k 位置の指定
         """
         if k < 1 or k > self._n:
             return None
         return self._members[k]
 
-    def _isLess(self, i:int, j:int):
+    def _isLess(self, i:int, j:int) -> bool:
         io=self._members[i]
         jo=self._members[j]
-        return (io < jo)
+        return (io < jo)# type: ignore
     
-    def _swap(self, i:int, j:int):
+    def _swap(self, i:int, j:int) -> None:
         t = self._members[i]
         self._members[i]=self._members[j]
         self._members[j]=t
