@@ -1,6 +1,7 @@
-from typing import Any
+from typing import Generic, TypeVar
+T = TypeVar('T')
 
-class BinaryHeap:
+class BinaryHeap(Generic[T]):
     """
     Binary Heap
     """
@@ -8,20 +9,20 @@ class BinaryHeap:
         """
         Constructor
         """
-        self._members = [None]#Zeroth position
+        self._members:list[T|None] = [None]#Zeroth position
         self._n = 0
     
     def __str__(self) -> str:
         """
         Converting this object into a string
         """
-        text = ""
+        text:str = ""
         for i in range(1, self._n + 1):
             a = self._members[i]
             text += f'{i}:{a}\n'
         return text
 
-    def add(self, o:Any) -> None:
+    def add(self, o:T) -> None:
         """
         Add an element to this binary heap
 
@@ -47,7 +48,7 @@ class BinaryHeap:
             k = kk
             self._shiftUp(k)
         
-    def poll(self) -> Any:
+    def poll(self) -> T|None:
         """
         Extract the minimum element. The extracted element will be removed from this binary heap.
 
@@ -56,8 +57,8 @@ class BinaryHeap:
         The minimum element of this binary heap
 
         """
-        t = self._members[1]
-        x = self._members.pop()
+        t:T|None = self._members[1]
+        x: T | None = self._members.pop()
         if len(self._members) > 1:
             self._members[1] = x
         else:
@@ -83,7 +84,7 @@ class BinaryHeap:
             self._swap(k, j)
             self._shiftDown(j)
     
-    def reduceValue(self, o:Any) -> None:
+    def reduceValue(self, o:T) -> None:
         """
         Specify the element whose value is decreased, and is shifted up
 
@@ -94,7 +95,7 @@ class BinaryHeap:
         k = self._members.index(o)
         self._shiftUp(k)
         
-    def raiseValue(self, o:Any) -> None:
+    def raiseValue(self, o:T) -> None:
         """
         Specify the element whose value is increased, and is shifted down
         Parameters
@@ -112,7 +113,7 @@ class BinaryHeap:
         """
         return self._n
 
-    def get(self, k:int) -> Any:
+    def get(self, k:int) -> T|None:
         """
         Return the element at the specified position
 
@@ -122,12 +123,12 @@ class BinaryHeap:
         return self._members[k]
 
     def _isLess(self, i:int, j:int) -> bool:
-        io=self._members[i]
-        jo=self._members[j]
+        io: T | None=self._members[i]
+        jo: T | None=self._members[j]
         return (io < jo)# type: ignore
     
     def _swap(self, i:int, j:int) -> None:
-        t = self._members[i]
+        t: T | None = self._members[i]
         self._members[i]=self._members[j]
         self._members[j]=t
         
