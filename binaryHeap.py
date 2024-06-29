@@ -10,7 +10,7 @@ class BinaryHeap(Generic[T]):
         Constructor
         """
         self._members:list[T|None] = [None]#Zeroth position
-        self._n = 0
+        self._n: int = 0
     
     def __str__(self) -> str:
         """
@@ -42,7 +42,7 @@ class BinaryHeap(Generic[T]):
         ---
         k: the position of the element to be shifted up
         """
-        kk = k // 2
+        kk: int = k // 2
         if (k > 1) and self._isLess(k, kk):
             self._swap(k, kk)
             k = kk
